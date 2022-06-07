@@ -1,0 +1,71 @@
+.title {
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 26.63px;
+    letter-spacing: -0.04em;
+    width: 100%;
+    border-bottom: 1px solid;
+    padding: 0 0 23px 0;
+    margin: 110px 0 0;
+}
+
+.about-project-title {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24.2px;
+    letter-spacing: -0.04em;
+    margin: 0;
+    padding: 0;
+}
+
+.about-project-text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.about-project-schedule {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 36px 1fr;
+    row-gap: 14px;
+    margin-bottom: 110px;
+}
+
+.about-project-description {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 24px 1fr;
+    row-gap: 26px;
+    column-gap: 40px;
+    margin-top: 70px;
+    margin-bottom: 110px;
+}
+
+.about-project-duration {
+    margin: 0;
+    padding: 9px 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16.94px;
+    text-align: center;
+}
+
+.about-project-duration:first-child {
+    background-color: #2BE080;
+}
+
+.about-project-duration:nth-child(2) {
+    background-color: #F2F2F2;
+}
+
+.about-project-duration-text {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #A0A0A0;
+    margin: auto;
+}

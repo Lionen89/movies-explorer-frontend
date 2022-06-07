@@ -1,48 +1,31 @@
 import React from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import Header from "../Header/Header";
+import Promo from "../Promo/Promo";
+import NavTab from "../NavTab/NavTab";
+import AboutProject from "../AboutProject/AboutProject";
+// import Techs from "../Techs/Techs";
+// import AboutMe from "../AboutMe/AboutMe";
+// import Portfolio from "../Portfolio/Portfolio"
+import Footer from '../Footer/Footer'
+
+
 
 function Main(props) {
   const currentUser = React.useContext(CurrentUserContext);
   return (
+    <>
+      <Header />
     <main>
-      {/* <section className="profile">
-        <div className="profile__avatar-container" onClick={props.onEditAvatar}>
-          <div
-            className="profile__avatar"
-            style={{ backgroundImage: `url(${currentUser.avatar})` }}
-          ></div>
-        </div>
-        <div className="profile__info">
-          <h1 className="profile__name">{currentUser.name}</h1>
-          <button
-            type="button"
-            aria-label="Close"
-            className="profile__edit-button"
-            onClick={props.onEditProfile}
-          ></button>
-          <p className="profile__description">{currentUser.about}</p>
-        </div>
-        <button
-          type="button"
-          className="profile__add-button"
-          onClick={props.onAddPlace}
-        ></button>
-      </section> */}
-      {/* <section className="elements">
-        {props.cards.map((item) => {
-          return (
-            // <Card
-            //   card={item}
-            //   key={item._id}
-            //   onCardLike={props.onCardLike}
-            //   onCardDelete={props.onCardDelete}
-            //   onCardClick={props.onCardClick}
-            //   onConfirmationfPopup={props.onConfirmationfPopup}
-            // />
-        //   );
-        // })}
-      </section> */}
+      <Promo />
+      <NavTab />
+      <AboutProject />
+      {/* <Techs />
+      <AboutMe />
+      <Portfolio /> */}
     </main>
+     <Footer />
+     </>
   );
 }
 
