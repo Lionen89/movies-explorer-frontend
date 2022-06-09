@@ -8,8 +8,11 @@
     padding: 0 0 23px 0;
     margin: 110px 0 0;
 }
+.about-project {
+    margin: 0 70px 0;
+}
 
-.about-project-title {
+.about-project__title {
     font-weight: 400;
     font-size: 20px;
     line-height: 24.2px;
@@ -18,7 +21,7 @@
     padding: 0;
 }
 
-.about-project-text {
+.about-project__text {
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
@@ -26,7 +29,7 @@
     padding: 0;
 }
 
-.about-project-schedule {
+.about-project__schedule {
     display: grid;
     grid-template-columns: 1fr 4fr;
     grid-template-rows: 36px 1fr;
@@ -34,7 +37,7 @@
     margin-bottom: 110px;
 }
 
-.about-project-description {
+.about-project__description {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 24px 1fr;
@@ -44,7 +47,7 @@
     margin-bottom: 110px;
 }
 
-.about-project-duration {
+.about-project__duration {
     margin: 0;
     padding: 9px 0;
     font-weight: 400;
@@ -53,19 +56,24 @@
     text-align: center;
 }
 
-.about-project-duration:first-child {
+.about-project__duration:first-child {
     background-color: #2BE080;
 }
 
-.about-project-duration:nth-child(2) {
+.about-project__duration:nth-child(2) {
     background-color: #F2F2F2;
 }
 
-.about-project-duration-text {
+.about-project__duration-text {
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
     text-align: center;
     color: #A0A0A0;
     margin: auto;
+}
+@media screen and (max-width: 960px) {
+    .about-project {
+        margin: 0 50px 0;
+    }
 }
