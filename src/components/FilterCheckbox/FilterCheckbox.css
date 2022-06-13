@@ -1,0 +1,17 @@
+.filter-checkbox {
+opacity: 0;
+z-index: -1;
+}
+.filter-checkbox::before {
+    background-image: url(../../images/smalltumb.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 36px;
+    height: 20px;
+}
+.filter-checkbox__text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    margin: 0 0 0 12px;
+}

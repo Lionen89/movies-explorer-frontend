@@ -37,10 +37,10 @@ function App() {
                   <Profile />
                 </Route>
                   <Route path="/movies">
-                  <Movies />
+                  <Movies onLogoClick={handleLogoClick} />
                 </Route>
                   <Route path="/saved-movies">
-                  <SavedMovies />
+                  <SavedMovies onLogoClick={handleLogoClick} />
                 </Route>
               </Switch>
             </div>

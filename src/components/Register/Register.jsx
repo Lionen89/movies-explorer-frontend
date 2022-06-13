@@ -1,21 +1,37 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../../images/logo.png";
+import logo from "../../images/logo.svg";
 import './Register.css'
 
 function Register(props) {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [isValidName, setIsValidName] = React.useState(true);
+  const [errorName, setErrorName] = React.useState("");
+  const [isValidEmail, setIsValidEmail] = React.useState(true);
+  const [errorEmail, setErrorEmail] = React.useState("");
+  const [isValidPassword, setIsValidPassword] = React.useState(true);
+  const [errorPassword, setErrorPassword] = React.useState("");
+
 
   function handleNameChange(e) {
     setName(e.target.value);
+    if (!setIsValidName(e.target.validity.valid)) {
+      setErrorName(e.target.validationMessage);
+    }
   }
   function handleEmailChange(e) {
     setEmail(e.target.value);
+    if (!setIsValidEmail(e.target.validity.valid)) {
+      setErrorEmail(e.target.validationMessage);
+    }
   }
   function handlePasswordChange(e) {
     setPassword(e.target.value);
+    if (!setIsValidPassword(e.target.validity.valid)) {
+      setErrorPassword(e.target.validationMessage);
+    }
   }
 
   function handleSubmit(e) {
@@ -37,7 +53,9 @@ function Register(props) {
         <span className="auth_form-name">Имя</span>
           <input
             type="name"
-            className="auth__text"
+            className={`auth__text ${
+              !isValidName ? "auth__text_type_error" : ""
+            }`}
             name="name"
             required
             minLength="2"
@@ -45,12 +63,21 @@ function Register(props) {
             value={name}
             onChange={handleNameChange}
           />
+          <span
+            className={`auth__text-error ${
+              !isValidName ? "auth__text-error_active" : ""
+            }`}
+          >
+            {errorName}
+          </span>
         </label>
         <label className="auth__form-field">
         <span className="auth_form-name">E-mail</span>
           <input
             type="email"
-            className="auth__text"
+            className={`auth__text ${
+              !isValidEmail ? "auth__text_type_error" : ""
+            }`}
             name="email"
             required
             minLength="2"
@@ -58,12 +85,21 @@ function Register(props) {
             value={email}
             onChange={handleEmailChange}
           />
+          <span
+            className={`auth__text-error ${
+              !isValidEmail ? "auth__text-error_active" : ""
+            }`}
+          >
+            {errorEmail}
+          </span>
         </label>
         <label className="auth__form-field">
         <span className="auth_form-name">Пароль</span>
           <input
             type="password"
-            className="auth__text"
+            className={`auth__text ${
+              !isValidPassword ? "auth__text_type_error-password" : ""
+            }`}
             id="password-input"
             name="password"
             required
@@ -71,6 +107,13 @@ function Register(props) {
             onChange={handlePasswordChange}
             minLength="6"
           />
+          <span
+            className={`auth__text-error ${
+              !isValidPassword ? "auth__text-error_active" : ""
+            }`}
+          >
+            {errorPassword}
+          </span>
         </label>
         <button type="submit" className="auth__save-button">
           Зарегистрироваться

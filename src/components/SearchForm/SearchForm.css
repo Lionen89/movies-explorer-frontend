@@ -1,0 +1,25 @@
+.search-form__film-container {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #E8E8E8;
+    margin: 70px 70px 30px;
+}
+.search-form__loupe {
+    background-image: url(../../images/icon.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    min-width: 34px;
+    min-height: 34px;
+    margin-left: 6px;
+}
+.search-form__input {
+    border: none;
+}
+.search-form__arrow {
+    background-image: url(../../images/find.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    min-width: 34px;
+    min-height: 34px;
+}
