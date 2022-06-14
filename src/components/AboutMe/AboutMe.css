@@ -45,6 +45,10 @@
     color: inherit;
 }
 
+.about-me__link:hover {
+    opacity: 0.7;
+}
+
 .about-me__img {
     background-image: url(../../images/foto.png);
     background-repeat: no-repeat;
@@ -90,30 +94,36 @@
     .about-me {
         margin: 0 14px 0;
     }
+
     .about-me__info {
         flex-direction: column;
         margin-top: 60px;
     }
+
     .about-me__name {
         font-size: 30px;
         line-height: 36.31px;
         margin-top: 40px;
     }
+
     .about-me__about {
         font-size: 11px;
         line-height: 16px;
         margin: 20px 0 20px;
     }
+
     .about-me__text {
         font-size: 11px;
         line-height: 16px;
         margin: 0 0 40px;
     }
+
     .about-me__img {
         min-width: 292px;
         min-height: 352px;
         order: -1;
     }
+
     .about-me__link {
         margin: 0 26px 0 0;
     }

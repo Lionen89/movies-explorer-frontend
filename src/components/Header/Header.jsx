@@ -1,27 +1,25 @@
 import logo from "../../images/logo.svg";
 import "./Header.css";
+import Navigation from "../Navigation/Navigation";
 
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function Header(props) {
-console.log(props);
+  const location = useLocation();
 
   return (
-    <header className="header">
+    <header
+      className={`header ${
+        location.pathname === "/" ? "header_type_not-auth" : ""
+      }`}
+    >
       <img
         src={logo}
-        alt="Лого Место"
+        alt="Логотип"
         className="header__logo"
-        onClick = {props.onLogoClick}
+        onClick={props.onLogoClick}
       />
-      <ul className="header__nav-auth">
-        <Link to="/signup" className="header__auth__link">
-          Регистрация
-        </Link>
-        <Link to="/signin" className="header__auth__link">
-          Войти
-        </Link>
-      </ul>
+      <Navigation onProfileClick={props.onProfileClick} />
     </header>
   );
 }

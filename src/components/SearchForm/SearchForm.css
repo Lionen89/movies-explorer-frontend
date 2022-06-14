@@ -15,6 +15,7 @@
 }
 .search-form__input {
     border: none;
+    text-align: center;
 }
 .search-form__arrow {
     background-image: url(../../images/find.svg);

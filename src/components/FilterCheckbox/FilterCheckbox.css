@@ -1,13 +1,23 @@
 .filter-checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 49px;
+}
+.filter-checkbox__input {
 opacity: 0;
 z-index: -1;
 }
-.filter-checkbox::before {
+.filter-checkbox__custom-checkbox {
     background-image: url(../../images/smalltumb.svg);
     background-position: center;
     background-repeat: no-repeat;
+    background-size: cover;
     width: 36px;
-    height: 20px;
+    min-height: 20px;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
 }
 .filter-checkbox__text {
     font-weight: 400;

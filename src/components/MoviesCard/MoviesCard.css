@@ -1,0 +1,53 @@
+.mov-card {
+    border-radius: 6px;
+    position: relative;
+    background-color: #FDFDFD;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
+    max-width: 364px;
+    min-height: 281px;
+    padding-bottom: 16px;
+    cursor: pointer;
+}
+
+.mov-card__title {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16.94px;
+    margin: 16px 0 17px 16px;
+    padding: 0;
+}
+
+.mov-card__like {
+    border: none;
+    background-image: url(../../images/save4d.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: inherit;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    bottom: 55px;
+    right: 14px;
+    padding: 0;
+}
+
+.mov-card__like_active {
+    background-image: url(../../images/icon__COLOR_main-3.svg);
+}
+
+.mov-card__like_not-active {
+    background-image: none;
+}
+
+.mov-card:hover .mov-card__like_not-active {
+    background-image: url(../../images/d4.svg);
+}
+
+.mov-card__duration {
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    color: #A0A0A0;
+    margin-left: 16px;
+    padding: 0;
+}
