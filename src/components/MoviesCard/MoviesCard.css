@@ -3,10 +3,14 @@
     position: relative;
     background-color: #FDFDFD;
     box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
-    max-width: 364px;
-    min-height: 281px;
+    width: 100%;
+    max-height: 281px;
     padding-bottom: 16px;
     cursor: pointer;
+}
+
+.mov-card__img {
+    width: 100%;
 }
 
 .mov-card__title {
@@ -26,9 +30,14 @@
     width: 30px;
     height: 30px;
     position: absolute;
-    bottom: 55px;
-    right: 14px;
+    bottom: 39px;
+    right: 16px;
     padding: 0;
+    cursor: pointer;
+}
+
+.mov-card__like:hover {
+    background-image: url(../../images/icon__COLOR_main-3.svg);
 }
 
 .mov-card__like_active {
@@ -46,8 +55,59 @@
 .mov-card__duration {
     font-weight: 400;
     font-size: 11px;
-    line-height: 13px;
+    line-height: 13.31px;
     color: #A0A0A0;
     margin-left: 16px;
     padding: 0;
+}
+
+@media screen and (max-width: 960px) {
+    .mov-card {
+        min-height: 248px;
+        padding-bottom: 14px;
+    }
+
+    .mov-card__img {
+        max-height: 190px;
+    }
+
+    .mov-card__title {
+        font-size: 13px;
+        line-height: 15.73px;
+        margin: 14px 0 15px 14px;
+    }
+
+    .mov-card__duration {
+        margin-left: 14px;
+    }
+
+    .mov-card__like {
+        bottom: 34px;
+        right: 14px;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .mov-card {
+        min-height: 223px;
+    }
+    .mov-card__like_not-active {
+        background-image: url(../../images/d4.svg);
+    }
+
+    .mov-card__title {
+        font-size: 12px;
+        line-height: 14.52px;
+        margin: 14px 0 14px 14px;
+    }
+
+    .mov-card__duration {
+        font-size: 10px;
+        line-height: 12.1px;
+    }
+
+    .mov-card__like {
+        bottom: 32px;
+        right: 10px;
+    }
 }

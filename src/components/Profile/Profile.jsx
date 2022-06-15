@@ -4,7 +4,7 @@ import "./Profile.css";
 function Profile(props) {
   return (
     <>
-      <Header />
+      <Header onLogoClick={props.onLogoClick}/>
       <section className="profile">
         <h2 className="profile__title">Привет, Илья!</h2>
         <div className="profile__text-container">

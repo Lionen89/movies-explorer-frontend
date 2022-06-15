@@ -38,7 +38,7 @@ function App() {
               <Main />
             </Route>
             <Route path="/profile">
-              <Profile />
+              <Profile onLogoClick={handleLogoClick} />
             </Route>
             <Route path="/movies">
               <Movies

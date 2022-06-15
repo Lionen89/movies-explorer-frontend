@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 49px;
+    padding-bottom: 49px;
 }
 .filter-checkbox__input {
 opacity: 0;
@@ -24,4 +24,18 @@ z-index: -1;
     font-size: 14px;
     line-height: 18px;
     margin: 0 0 0 12px;
+}
+@media screen and (max-width: 960px) {
+    .filter-checkbox {
+        padding-bottom: 62px;
+    }
+}
+@media screen and (max-width: 580px) {
+    .filter-checkbox {
+        padding-bottom: 51px;
+    }
+    .filter-checkbox__text {
+        font-size: 11px;
+        margin-left: 13px;
+    }
 }
