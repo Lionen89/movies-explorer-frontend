@@ -33,6 +33,9 @@
 .footer__links {
     margin: 0;
     padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: end;
 }
 
 .footer__link {
@@ -80,7 +83,6 @@
 
     .footer__links {
         order: -1;
-        display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
