@@ -50,6 +50,7 @@
     padding: 0 0 10px 0;
     margin: 5px auto 24px;
 }
+
 .auth__text_type_error {
     border-bottom: 1px solid rgba(255, 104, 56, 1);
     margin: 5px auto 0;
@@ -63,6 +64,7 @@
     margin: 6px 0;
     opacity: 0;
 }
+
 .auth__text_type_error-password {
     color: #EE3465;
     margin: 6px 0;

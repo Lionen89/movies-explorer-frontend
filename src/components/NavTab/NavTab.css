@@ -14,8 +14,9 @@
     color: #000000;
     cursor: pointer;
 }
+
 .nav__link:hover {
-opacity: 0.7;
+    opacity: 0.7;
 }
 
 @media screen and (max-width: 690px) {

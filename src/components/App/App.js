@@ -1,5 +1,5 @@
 import React from "react";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+// import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { Route, Switch, useHistory } from "react-router-dom";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
@@ -12,8 +12,8 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 import "./App.css";
 
 function App() {
-  const [currentUser, setCurrentUser] = React.useState({});
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  // const [currentUser, setCurrentUser] = React.useState({});
+  // const [loggedIn, setLoggedIn] = React.useState(false);
   const history = useHistory();
 
   function handleLogoClick() {
@@ -24,7 +24,7 @@ function App() {
   }
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    // <CurrentUserContext.Provider value={currentUser}>
       <div className="main-page">
         <div className="main-page__container">
           <Switch>
@@ -58,7 +58,7 @@ function App() {
           </Switch>
         </div>
       </div>
-    </CurrentUserContext.Provider>
+    // </CurrentUserContext.Provider>
   );
 }
 

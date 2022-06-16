@@ -4,10 +4,12 @@
     align-items: center;
     padding-bottom: 49px;
 }
+
 .filter-checkbox__input {
-opacity: 0;
-z-index: -1;
+    opacity: 0;
+    z-index: -1;
 }
+
 .filter-checkbox__custom-checkbox {
     background-image: url(../../images/smalltumb.svg);
     background-position: center;
@@ -19,21 +21,25 @@ z-index: -1;
     margin: 0;
     padding: 0;
 }
+
 .filter-checkbox__text {
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
     margin: 0 0 0 12px;
 }
+
 @media screen and (max-width: 960px) {
     .filter-checkbox {
         padding-bottom: 62px;
     }
 }
+
 @media screen and (max-width: 580px) {
     .filter-checkbox {
         padding-bottom: 51px;
     }
+
     .filter-checkbox__text {
         font-size: 11px;
         margin-left: 13px;

@@ -132,9 +132,11 @@
         text-align: center;
         margin: 50px auto 80px;
     }
+
     .auth__text {
         width: 260px;
     }
+
     .auth__tooltip {
         font-size: 12px;
         line-height: 14.52px;

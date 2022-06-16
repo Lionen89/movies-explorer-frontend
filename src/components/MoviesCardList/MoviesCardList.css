@@ -15,6 +15,7 @@
         gap: 30px;
     }
 }
+
 @media screen and (max-width: 430px) {
     .mov-card-list {
         grid-template-columns: 1fr;

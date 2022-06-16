@@ -53,6 +53,7 @@
 .navigation__link-film:first-of-type {
     display: none;
 }
+
 .navigation__link-film:nth-of-type(2) {
     margin-right: 20px;
 }
@@ -99,9 +100,10 @@
         display: flex;
         flex-direction: column;
         align-content: center;
-        height: 100vh;
+        height: 100%;
         min-width: 520px;
         margin: 0;
+        transition: all 0.4s ease;
     }
 
     .navigation__overlay {
@@ -116,6 +118,10 @@
         content: '';
     }
 
+    .navigation_open {
+        right: 0;
+    }
+
     .navigation__burger-menu {
         position: absolute;
         top: 15px;
@@ -123,35 +129,37 @@
         width: 44px;
         height: 44px;
         display: block;
+        z-index: 6;
     }
 
-    .navigation__burger-string {
+    .navigation__burger-string:nth-of-type(2) {
         height: 3px;
         width: 28px;
         position: absolute;
         background: #000000;
         margin: 0 auto;
         top: 21px;
+        transition: 0.5s;
     }
 
-    .navigation__burger-string::before {
+    .navigation__burger-string:first-of-type {
         height: 3px;
         width: 28px;
         position: absolute;
         background: #000000;
         margin: 0 auto;
         top: 11px;
-        content: '';
+        transition: 0.5s;
     }
 
-    .navigation__burger-string::after {
+    .navigation__burger-string:last-of-type {
         height: 3px;
         width: 28px;
         position: absolute;
         background: #000000;
         margin: 0 auto;
         bottom: 10px;
-        content: '';
+        transition: 0.5s;
     }
 
     .navigation__link-film {
@@ -182,11 +190,49 @@
 
     .navigation__link_profile {
         max-width: 100px;
-        margin: 621px auto 0;
+        margin: 621px auto 90px;
+    }
+
+    .navigation__burger-string_open:nth-of-type(2) {
+        opacity: 0;
+        transition: 0.5s;
+    }
+
+    .navigation__burger-string_open:first-of-type {
+        transform: rotate(45deg);
+        top: 22px;
+        transition: 0.5s;
+    }
+
+    .navigation__burger-string_open:last-of-type {
+        transform: rotate(-45deg);
+        top: 22px;
+        transition: 0.5s;
     }
 }
 
 @media screen and (max-width: 580px) {
+    .navigation {
+        min-width: 100%;
+    }
+
+    .navigation__link-film:first-of-type {
+        margin: 144px auto 24px;
+    }
+
+    .navigation__link-film:last-of-type {
+        margin-top: 15px;
+    }
+
+    .navigation__link-film_active {
+        padding-bottom: 7px;
+    }
+
+    .navigation__link_profile {
+        margin-top: 444px;
+        margin-bottom: 26px;
+    }
+
     .nav-auth {
         margin-right: 14px;
     }

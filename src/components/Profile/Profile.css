@@ -57,6 +57,7 @@
     text-align: center;
     color: #EE3465;
 }
+
 .profile__link:first-of-type {
     font-weight: 400;
     font-size: 13px;
@@ -64,27 +65,34 @@
     color: inherit;
     margin: 0;
 }
+
 @media screen and (max-width: 960px) {
     .profile__title {
         margin: 236px auto 96px;
     }
+
     .profile__text-container:last-of-type {
         margin-bottom: 210px;
     }
+
     .profile__link {
-        margin-bottom:  269px;
+        margin-bottom: 269px;
     }
 }
+
 @media screen and (max-width: 580px) {
     .profile__title {
         margin: 70px auto 80px;
     }
+
     .profile__text-container {
         min-width: 260px;
     }
+
     .profile__text-container:last-of-type {
         margin-bottom: 379px;
     }
+
     .profile__link {
         margin-bottom: 40px;
     }

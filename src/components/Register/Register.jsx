@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
-import './Register.css'
+import "./Register.css";
 
 function Register(props) {
   const [name, setName] = React.useState("");
@@ -13,7 +13,6 @@ function Register(props) {
   const [errorEmail, setErrorEmail] = React.useState("");
   const [isValidPassword, setIsValidPassword] = React.useState(true);
   const [errorPassword, setErrorPassword] = React.useState("");
-
 
   function handleNameChange(e) {
     setName(e.target.value);
@@ -50,7 +49,7 @@ function Register(props) {
       <h2 className="auth__title">Добро пожаловать&#33;</h2>
       <form className="auth__form" onSubmit={handleSubmit}>
         <label className="auth__form-field">
-        <span className="auth_form-name">Имя</span>
+          <span className="auth_form-name">Имя</span>
           <input
             type="name"
             className={`auth__text ${
@@ -72,7 +71,7 @@ function Register(props) {
           </span>
         </label>
         <label className="auth__form-field">
-        <span className="auth_form-name">E-mail</span>
+          <span className="auth_form-name">E-mail</span>
           <input
             type="email"
             className={`auth__text ${
@@ -94,7 +93,7 @@ function Register(props) {
           </span>
         </label>
         <label className="auth__form-field">
-        <span className="auth_form-name">Пароль</span>
+          <span className="auth_form-name">Пароль</span>
           <input
             type="password"
             className={`auth__text ${

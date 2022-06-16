@@ -91,6 +91,7 @@
     .mov-card {
         min-height: 223px;
     }
+
     .mov-card__like_not-active {
         background-image: url(../../images/d4.svg);
     }

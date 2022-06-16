@@ -1,8 +1,9 @@
-.more-button__container{
+.more-button__container {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
+
 .more-button {
     border: 1px solid #E8E8E8;
     background-color: inherit;
@@ -16,11 +17,13 @@
     margin: 50px auto 80px;
     cursor: pointer;
 }
+
 .more-button:hover {
     opacity: 0.8;
 }
+
 @media screen and (max-width: 580px) {
     .more-button {
-    width: 240px;
+        width: 240px;
     }
 }

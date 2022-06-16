@@ -4,6 +4,7 @@
     justify-content: space-between;
     align-items: center;
 }
+
 .header_type_not-auth {
     background-color: #465DFF;
 }
