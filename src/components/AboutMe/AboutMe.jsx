@@ -15,12 +15,17 @@ function AboutMe() {
             Делаю Pet-проекты и готов к перейти к более серьезным проектам.
           </p>
           <a
+            target="_blank"
             href="https://www.facebook.com/profile.php?id=100001774543665"
             className="about-me__link"
           >
             Facebook
           </a>
-          <a href="https://github.com/Lionen89" className="about-me__link">
+          <a
+            target="_blank"
+            href="https://github.com/Lionen89"
+            className="about-me__link"
+          >
             Github
           </a>
         </div>

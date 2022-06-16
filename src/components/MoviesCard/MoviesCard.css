@@ -87,6 +87,19 @@
     }
 }
 
+@media screen and (max-width: 690px) {
+    .mov-card {
+        min-height: 200px;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .mov-card {
+        min-height: 150px;
+    }
+}
+
+
 @media screen and (max-width: 430px) {
     .mov-card {
         min-height: 223px;

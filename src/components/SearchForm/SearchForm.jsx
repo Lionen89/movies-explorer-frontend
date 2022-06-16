@@ -4,15 +4,18 @@ function SearchForm() {
   return (
     <>
       <section className="search-form">
-        <div className="search-form__film-container">
-          <div className="search-form__loupe"></div>
+        <form className="search-form__film-container">
+        <label className="search-form__form-field">
+          <button className="search-form__loupe"></button>
           <input
+            required
             type="name"
             placeholder="Фильм"
             className="search-form__input"
           ></input>
-          <div className="search-form__arrow"></div>
-        </div>
+          <button className="search-form__arrow"></button>
+        </label>
+        </form>
         <FilterCheckbox />
       </section>
     </>

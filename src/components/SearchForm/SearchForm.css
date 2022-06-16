@@ -1,9 +1,11 @@
 .search-form__film-container {
-    display: flex;
-    justify-content: space-between;
     padding-bottom: 15px;
     border-bottom: 1px solid #E8E8E8;
     margin: 70px 70px 30px;
+}
+.search-form__form-field {
+    display: flex;
+    justify-content: space-between;
 }
 
 .search-form__loupe {
@@ -13,6 +15,8 @@
     min-width: 34px;
     min-height: 34px;
     margin-left: 6px;
+    background-color: inherit;
+    border: none;
 }
 
 .search-form__input {
@@ -26,6 +30,8 @@
     background-position: center;
     min-width: 34px;
     min-height: 34px;
+    background-color: inherit;
+    border: none;
 }
 
 @media screen and (max-width: 960px) {

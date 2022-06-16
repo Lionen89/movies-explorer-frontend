@@ -93,7 +93,7 @@
 
     .navigation {
         z-index: 5;
-        position: absolute;
+        position: fixed;
         background: #FFFFFF;
         top: 0;
         right: -100%;
@@ -189,8 +189,11 @@
     }
 
     .navigation__link_profile {
+        position: absolute;
         max-width: 100px;
-        margin: 621px auto 90px;
+        bottom: 90px;
+        margin: 0;
+        right: calc(100%/2 - 50px);
     }
 
     .navigation__burger-string_open:nth-of-type(2) {
@@ -229,8 +232,8 @@
     }
 
     .navigation__link_profile {
-        margin-top: 444px;
-        margin-bottom: 26px;
+        right: calc(100%/2 - 50px);
+        bottom: 46px;
     }
 
     .nav-auth {
