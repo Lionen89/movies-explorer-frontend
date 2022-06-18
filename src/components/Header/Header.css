@@ -1,0 +1,28 @@
+.header {
+    background-color: inherit;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header_type_not-auth {
+    background-color: #465DFF;
+}
+
+.header__logo {
+    max-height: 38px;
+    margin: 18px auto 18px 70px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 960px) {
+    .header__logo {
+        margin-left: 30px;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .header__logo {
+        margin-left: 14px;
+    }
+}

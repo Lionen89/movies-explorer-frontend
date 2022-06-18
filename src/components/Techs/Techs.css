@@ -1,0 +1,137 @@
+.techs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #F5F5F5;
+}
+
+.techs__line {
+    border-bottom: 1px solid;
+    width: calc(100% - 70px * 2);
+    margin-top: 150px;
+}
+
+.techs__title {
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 26.63px;
+    letter-spacing: -0.04em;
+    width: calc(100% - 50px * 2);
+    border-bottom: 1px solid;
+    padding: 0 0 23px 0;
+    margin: 90px 50px 0;
+    display: none;
+}
+
+.techs__description {
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 58px;
+    letter-spacing: -0.04em;
+    margin: 90px auto 26px;
+}
+
+.techs__text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.04em;
+    text-align: center;
+    max-width: 460px;
+    margin: 0 auto;
+}
+
+.techs__stack {
+    display: flex;
+    list-style-type: none;
+    margin: 100px auto;
+    padding: 0;
+}
+
+.techs__stack-text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: -0.04em;
+    text-align: center;
+    width: 90px;
+    background-color: #E8E8E8;
+    border-radius: 10px;
+    padding: 21px 0 22px;
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 960px) {
+    .techs__line {
+        width: calc(100% - 50px * 2);
+        display: none;
+    }
+
+    .techs__title {
+        display: block;
+    }
+
+    .techs__description {
+        margin: 80px auto 22px;
+    }
+
+    .techs__text {
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .techs__stack {
+        margin: 83px auto 90px;
+    }
+
+    .techs__stack-text {
+        font-size: 12px;
+        line-height: 14.52px;
+        width: 84px;
+    }
+}
+
+@media screen and (max-width: 690px) {
+    .techs {
+        background-color: inherit;
+    }
+
+    .techs__title {
+        font-size: 18px;
+        line-height: 21.78px;
+        padding: 0 0 28px 0;
+        margin: 70px 18px 0;
+        width: calc(100% - 18px * 2);
+    }
+
+    .techs__description {
+        margin: 60px auto 24px;
+        font-size: 30px;
+        line-height: 36px;
+    }
+
+    .techs__text {
+        font-size: 11px;
+        line-height: 16px;
+    }
+
+    .techs__stack {
+        margin: 50px 71px 60px;
+        flex-wrap: wrap;
+    }
+
+    .techs__stack-text {
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (max-width: 410px) {
+    .techs__text {
+        max-width: 292px;
+    }
+
+    .techs__stack-text:nth-child(even) {
+        margin-right: 0;
+    }
+}
