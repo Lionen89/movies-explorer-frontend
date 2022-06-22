@@ -1,5 +1,5 @@
 import React from "react";
-// import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import Header from "../Header/Header";
 import Promo from "../Promo/Promo";
 import NavTab from "../NavTab/NavTab";
@@ -10,7 +10,7 @@ import Portfolio from "../Portfolio/Portfolio";
 import Footer from "../Footer/Footer";
 
 function Main(props) {
-  // const currentUser = React.useContext(CurrentUserContext);
+  const currentUser = React.useContext(CurrentUserContext);
   return (
     <>
       <Header />

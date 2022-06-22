@@ -123,6 +123,10 @@
 .auth__save-button:hover {
     opacity: 85%;
 }
+.auth__save-button_disable {
+    background-color: #F8F8F8;
+    color: #C2C2C2;
+}
 
 @media screen and (max-width: 960px) {
     .auth__logo {

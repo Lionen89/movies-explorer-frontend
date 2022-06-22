@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Login.css";
 import logo from "../../images/logo.svg";
+import  { validationEmailMessage, regexEmail } from "../../utils/Constants"
 
 function Login(props) {
   const [email, setEmail] = React.useState("");
@@ -10,11 +11,19 @@ function Login(props) {
   const [errorEmail, setErrorEmail] = React.useState("");
   const [isValidPassword, setIsValidPassword] = React.useState(true);
   const [errorPassword, setErrorPassword] = React.useState("");
+  const [isFormValid, setValidityForm] = React.useState(false);
 
   function handleEmailChange(e) {
-    setEmail(e.target.value);
-    if (!setIsValidEmail(e.target.validity.valid)) {
+    const currentEmail = e.target.value;
+    setEmail(currentEmail);
+    setIsValidEmail(true);
+    setErrorEmail("");
+    if (!e.target.validity.valid) {
+      setIsValidEmail(false);
       setErrorEmail(e.target.validationMessage);
+    } else if (!regexEmail.test(currentEmail)) {
+      setIsValidEmail(false);
+      setErrorEmail(validationEmailMessage);
     }
   }
   function handlePasswordChange(e) {
@@ -25,8 +34,15 @@ function Login(props) {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    props.hadleLogin(password, email);
+    props.hadleLogin(email, password);
   }
+  React.useEffect(() => {
+    if (isValidEmail && email && password && isValidPassword) {
+      setValidityForm(true);
+    } else {
+      setValidityForm(false);
+    }
+  }, [isValidEmail,email,password, isValidPassword]);
 
   return (
     <div className="auth">
@@ -82,7 +98,13 @@ function Login(props) {
             {errorPassword}
           </span>
         </label>
-        <button type="submit" className="auth__save-button">
+        <button
+          type="submit"
+          className={`auth__save-button ${
+            !isFormValid ? "auth__save-button_disable" : ""
+          }`}
+          disabled={!isFormValid}
+        >
           Войти
         </button>
         <div className="auth__tooltips">
