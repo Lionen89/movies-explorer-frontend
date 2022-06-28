@@ -1,15 +1,20 @@
 import imageOK from "../../images/Union.svg";
 import imageNotOK from "../../images/Union(1).svg";
+import { useEscClose, useClickClose} from '../../utils/UseClose';
+
+import './InfoTooltip.css'
 
 function InfoTooltip(props) {
+  useEscClose(props.isOpen, props.onClose);
+  useClickClose(props.isOpen, props.onClose, "tooltip_opened");
     let image
     let text
-    if (props.registrationComplete) { 
-        text= 'Вы успешно зарегистрировались!'
+    if (!props.error) { 
+        text= 'Вы успешно обновили профиль!'
         image= imageOK
     }
     else {
-    text= 'Что-то пошло не так! Попробуйте  еще раз'
+    text= props.error
     image= imageNotOK
     }
   return (

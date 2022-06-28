@@ -1,22 +1,44 @@
 import "./MoviesCard.css";
-import poster from "../../images/pic__COLOR_pic.png";
 import { useLocation } from "react-router-dom";
+import { urlserver } from "../../utils/Constants";
 
-function MoviesCard() {
+function MoviesCard(props) {
   const location = useLocation();
-
+  let image;
+  props.movie.image.url
+    ? (image = urlserver + props.movie.image.url)
+    : (image = props.movie.image);
+  function handleLikeClick() {
+    if (location.pathname === "/movies" && props.isLiked) {
+      props.deleteMovie(props.movie);
+    } else if (location.pathname === "/saved-movies") {
+      props.deleteMovie(props.movie);
+    } else props.onCardLike(props.movie);
+  }
+  function getTimeFromMins(mins) {
+    let hours = Math.trunc(mins / 60);
+    let minutes = mins % 60;
+    if(hours ===0) {return minutes + "м"}
+    else {return hours + "ч " + minutes + "м"};
+  }
   return (
     <article className="mov-card">
-      <img src={poster} alt="Постер фильма" className="mov-card__img" />
-      <h2 className="mov-card__title">В погоне за Бенкси</h2>
+      <img src={image} alt="Постер фильма" className="mov-card__img" />
+      <h2 className="mov-card__title">{props.movie.nameRU}</h2>
       <button
         className={`mov-card__like ${
+          props.isLiked ? "mov-card__like_active" : ""
+        }
+        ${
           location.pathname === "/saved-movies"
             ? "mov-card__like_not-active"
             : ""
         }`}
+        onClick={handleLikeClick}
       ></button>
-      <span className="mov-card__duration">1ч 24м</span>
+      <span className="mov-card__duration">
+        {getTimeFromMins(props.movie.duration)}
+      </span>
     </article>
   );
 }

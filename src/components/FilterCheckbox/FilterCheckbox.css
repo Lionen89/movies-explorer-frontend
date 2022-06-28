@@ -11,7 +11,7 @@
 }
 
 .filter-checkbox__custom-checkbox {
-    background-image: url(../../images/smalltumb.svg);
+    background-image: url(../../images/smalltumb\ 2.svg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -20,6 +20,10 @@
     display: inline-block;
     margin: 0;
     padding: 0;
+}
+
+.filter-checkbox__custom-checkbox_active {
+    background-image: url(../../images/smalltumb.svg);
 }
 
 .filter-checkbox__text {

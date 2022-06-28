@@ -9,45 +9,79 @@ import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import apiMain from "../../utils/MainApi";
+import MoviesApi from "../../utils/MoviesApi";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
+import { urlserver } from "../../utils/Constants";
 
 import "./App.css";
+import Preloader from "../Preloader/Preloader";
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [registerError, setRegisterError]= React.useState("");
+  const [error, setError] = React.useState("");
   const history = useHistory();
   const location = useLocation();
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isDataChange, setIsDataChange] = React.useState(false);
+  const [firstLoading, setFirstLoading] = React.useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
+  const [movies, setMovies] = React.useState([]);
+  const [savedMovies, setSavedMovies] = React.useState([]);
+  const [checkboxStatus, setCheckboxStatus] = React.useState(false);
 
   React.useEffect(() => {
     const tokenCheck = () => {
-    const path = location.pathname;
+      const path = location.pathname;
       const jwt = localStorage.getItem("token");
       if (jwt !== null) {
-        apiMain.checkToken(jwt)
-        .then((data) => {
-          setLoggedIn(true);
-          path === "/" ? history.push('/movies') : history.push(path)
-        })
-        .catch((err) => console.log(`Ошибка: ${err}`));
-      }
-      else return
+        setIsLoading(true);
+        apiMain
+          .checkToken(jwt)
+          .then((data) => {
+            setLoggedIn(true);
+            path === "/" ? history.push("/movies") : history.push(path);
+          })
+          .catch((err) => console.log(`Ошибка: ${err}`))
+          .finally(() => {
+            setIsLoading(false);
+            setFirstLoading(true);
+          });
+      } else setFirstLoading(true);
     };
     tokenCheck();
   }, []);
+
   React.useEffect(() => {
-    setIsLoading(true)
-      apiMain.getProfileData()
-      .then((user) => {
+    setIsLoading(true);
+    const GetMoveis = new MoviesApi();
+    Promise.all([apiMain.getProfileData(), GetMoveis.getData()])
+      .then(([user, movies]) => {
         setCurrentUser(user);
+        setMovies(movies);
       })
       .catch((err) => console.log(`Ошибка: ${err.status}`))
-      .finally(() => setIsLoading(false));
-  }
-  , [loggedIn]);
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [loggedIn]);
+
+  React.useEffect(() => {
+    setIsLoading(true);
+    apiMain
+      .getSavedMovies()
+      .then((savedMovieList) => {
+        setSavedMovies(savedMovieList);
+        localStorage.setItem("savedMovieList", JSON.stringify(savedMovieList));
+      })
+      .catch((err) => {
+        console.log(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [location.pathname, loggedIn]);
 
   function handleLogoClick() {
     history.push("/");
@@ -57,98 +91,215 @@ function App() {
   }
   function signOut() {
     setLoggedIn(false);
-    localStorage.removeItem("token");
+    localStorage.clear();
+    setCurrentUser({});
     history.push("/");
   }
 
   const hadleLogin = (email, password) => {
     apiMain
-    .loginUser(email, password)
-    .then((data) => {
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-        setLoggedIn(true);
-        history.push("/movies");
-      }
-    })
-    .catch((err) => { console.log(`Ошибка: ${err}`)
-    });
-}
+      .loginUser(email, password)
+      .then((data) => {
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          setLoggedIn(true);
+          history.push("/movies");
+          setError("");
+        }
+      })
+      .catch((err) => {
+        setIsInfoTooltipOpen(true);
+        setError(err.message);
+      });
+  };
 
   const hadleRegister = (name, email, password) => {
     apiMain
       .registerUser(name, email, password)
-      .then((data) => { 
-        hadleLogin(data.email, password)
+      .then((data) => {
+        hadleLogin(data.email, password);
       })
       .catch((err) => {
-        setRegisterError(err.message);
+        setIsInfoTooltipOpen(true);
+        setError(err.message);
+      });
+  };
+  const updateUser = (email, name) => {
+    setIsLoading(true);
+    apiMain
+      .updateUser(email, name)
+      .then((user) => {
+        setCurrentUser(user);
+        setIsInfoTooltipOpen(true);
+      })
+      .catch((err) => {
+        setIsInfoTooltipOpen(true);
+        setError(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+  function closeInfoTooltip() {
+    setIsInfoTooltipOpen(false);
+  }
+  function searchMovie(keyword) {
+    const movieList = movies.filter((item) => {
+      return item.nameRU.includes(keyword);
+    });
+    localStorage.setItem("keyword", keyword);
+    localStorage.setItem("movieList", JSON.stringify(movieList));
+    setIsDataChange(true);
+  }
+  function searchSavedMovie(keyword) {
+    const savedMovieList = savedMovies.filter((item) => {
+      return item.nameRU.includes(keyword);
+    });
+    localStorage.setItem("keySavedMovie", keyword);
+    localStorage.setItem("savedMovieList", JSON.stringify(savedMovieList));
+    setIsDataChange(true);
+  }
+  function setMovieLike(movie) {
+    let country;
+    let nameEN;
+    !movie.country ? (country = "unknown") : (country = movie.country);
+    const director = movie.director;
+    const duration = movie.duration;
+    const year = movie.year;
+    const description = movie.description;
+    const image = urlserver + movie.image.url.slice(1);
+    const trailerLink = movie.trailerLink;
+    const thumbnail = urlserver + movie.image.formats.thumbnail.url;
+    const movieId = movie.id;
+    const nameRU = movie.nameRU;
+    !movie.nameEN ? (nameEN = "unknown") : (nameEN = movie.nameEN);
+    apiMain
+      .createMovie({
+        country,
+        director,
+        duration,
+        year,
+        description,
+        image,
+        trailerLink,
+        thumbnail,
+        movieId,
+        nameRU,
+        nameEN,
+      })
+      .then((data) => {
+        const savedMovieList = JSON.parse(
+          localStorage.getItem("savedMovieList")
+        );
+        savedMovieList.push(data);
+        localStorage.setItem("savedMovieList", JSON.stringify(savedMovieList));
+        setIsDataChange(true);
+      })
+      .catch((err) => {
+        console.log(err.message);
       });
   }
-  const updateUser = (email, name) => {
-    apiMain.updateUser(email, name)
-    .then((user)=> {
-      setCurrentUser(user);
+  function deleteMovie(movie) {
+    let id;
+    movie.id
+      ? savedMovies.find((item) => {
+          if (item.nameRU.includes(movie.nameRU)) return (id = item._id);
+          else return (id = "");
+        })
+      : (id = movie._id);
+    apiMain
+      .deleteMovie(id)
+      .then(() => {
+        const newSavedMovieList = savedMovies.filter((item) => {
+          return !item._id.includes(id);
+        });
+        localStorage.setItem(
+          "savedMovieList",
+          JSON.stringify(newSavedMovieList)
+        );
+        setIsDataChange(true);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+  function shortMoviesFilter(list, nameList) {
+    setCheckboxStatus(!checkboxStatus);
+    const filteredList = list.filter((item) => {
+      return item.duration <= 40
     })
-    .catch((err) => {
-      console.log(err)
-    });
+    localStorage.setItem("checkboxStatus", checkboxStatus);
+    if(nameList === "movieList"){
+    localStorage.setItem("filteredMovieList", JSON.stringify(filteredList))}
+    else { localStorage.setItem("filteredSavedMovieList", JSON.stringify(filteredList))}
+    setIsDataChange(true);
   }
 
-  return (
+  return !firstLoading ? (
+    <Preloader />
+  ) : (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="main-page">
         <div className="main-page__container">
           <Switch>
             <Route path="/signup">
-              <Register onLogoClick={handleLogoClick} 
-              hadleRegister={hadleRegister}
-              registerError={registerError} />
+              <Register
+                onLogoClick={handleLogoClick}
+                hadleRegister={hadleRegister}
+              />
             </Route>
             <Route path="/signin">
-              <Login onLogoClick={handleLogoClick} 
-                hadleLogin={hadleLogin}
-                />
+              <Login onLogoClick={handleLogoClick} hadleLogin={hadleLogin} />
             </Route>
-            <Route exact path="/"
-              >
+            <Route exact path="/">
               <Main />
             </Route>
-            <ProtectedRoute path="/profile"
+            <ProtectedRoute
+              path="/profile"
               loggedIn={loggedIn}
               component={Profile}
               onLogoClick={handleLogoClick}
               onSignOut={signOut}
               onUpdateUser={updateUser}
-              >
-            </ProtectedRoute>
-            <ProtectedRoute path="/movies"
-            isLoading={isLoading} 
+            ></ProtectedRoute>
+            <ProtectedRoute
+              path="/movies"
+              isLoading={isLoading}
               loggedIn={loggedIn}
+              isDataChange={isDataChange}
               component={Movies}
               onLogoClick={handleLogoClick}
               onProfileClick={handleProfileClick}
-              >
-            </ProtectedRoute>
-            <ProtectedRoute path="/saved-movies" 
+              onSearch={searchMovie}
+              setIsDataChange={setIsDataChange}
+              onCardLike={setMovieLike}
+              deleteMovie={deleteMovie}
+              shortMoviesFilter={shortMoviesFilter}
+            ></ProtectedRoute>
+            <ProtectedRoute
+              path="/saved-movies"
               loggedIn={loggedIn}
               component={SavedMovies}
               onLogoClick={handleLogoClick}
               onProfileClick={handleProfileClick}
-              >
-            </ProtectedRoute>
+              isDataChange={isDataChange}
+              setIsDataChange={setIsDataChange}
+              deleteMovie={deleteMovie}
+              onSearch={searchSavedMovie}
+              shortMoviesFilter={shortMoviesFilter}
+            ></ProtectedRoute>
             <Route path="*">
               <PageNotFound />
             </Route>
           </Switch>
           <InfoTooltip
-          isOpen={isIsInfoTooltipOpen}
-          onClose={closeInfoTooltip}
-          registrationComplete={isRegistrationComplete}
-        />
+            isOpen={isInfoTooltipOpen}
+            onClose={closeInfoTooltip}
+            error={error}
+          />
         </div>
       </div>
-     </CurrentUserContext.Provider>
+    </CurrentUserContext.Provider>
   );
 }
 
