@@ -9,9 +9,7 @@ function MoviesCard(props) {
     ? (image = urlserver + props.movie.image.url)
     : (image = props.movie.image);
   function handleLikeClick() {
-    if (location.pathname === "/movies" && props.isLiked) {
-      props.deleteMovie(props.movie);
-    } else if (location.pathname === "/saved-movies") {
+    if ((location.pathname === "/movies" && props.isLiked) || location.pathname === "/saved-movies") {
       props.deleteMovie(props.movie);
     } else props.onCardLike(props.movie);
   }

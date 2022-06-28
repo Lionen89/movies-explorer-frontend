@@ -15,7 +15,7 @@ function FilterCheckbox(props) {
   return (
     <article>
       <label className="filter-checkbox">
-        <input type="checkbox" className="filter-checkbox__input" checked={props.checkboxStatus}/>
+        <input type="checkbox" className="filter-checkbox__input"/>
         <span className= {`filter-checkbox__custom-checkbox ${
           props.checkboxStatus ? "filter-checkbox__custom-checkbox_active" : ""
         }

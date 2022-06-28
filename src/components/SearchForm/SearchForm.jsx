@@ -8,7 +8,7 @@ function SearchForm(props) {
     props.setIsDataChange(false);
   }, [props.isDataChange]);
   const checkboxStatus = JSON.parse(localStorage.getItem("checkboxStatus"));
-  const [keyword, setKeyword] = React.useState({});
+  const [keyword, setKeyword] = React.useState('');
   const location = useLocation();
   const defaultValue =
     location.pathname === "/saved-movies"
@@ -39,8 +39,10 @@ function SearchForm(props) {
             <button className="search-form__arrow"></button>
           </label>
         </form>
-        <FilterCheckbox checkboxStatus = {checkboxStatus}
-        shortMoviesFilter={props.shortMoviesFilter} />
+        <FilterCheckbox 
+          checkboxStatus = {checkboxStatus}
+          shortMoviesFilter={props.shortMoviesFilter} 
+        />
       </section>
     </>
   );

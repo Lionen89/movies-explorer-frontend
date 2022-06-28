@@ -18,7 +18,7 @@ import "./App.css";
 import Preloader from "../Preloader/Preloader";
 
 function App() {
-  const [currentUser, setCurrentUser] = React.useState({});
+  const [currentUser, setCurrentUser] = React.useState();
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [error, setError] = React.useState("");
   const history = useHistory();
@@ -39,7 +39,8 @@ function App() {
         setIsLoading(true);
         apiMain
           .checkToken(jwt)
-          .then((data) => {
+          .then((user) => {
+            setCurrentUser(user);
             setLoggedIn(true);
             path === "/" ? history.push("/movies") : history.push(path);
           })
@@ -54,12 +55,20 @@ function App() {
   }, []);
 
   React.useEffect(() => {
+    if (!loggedIn) {
+      return;
+    }
+
     setIsLoading(true);
+
     const GetMoveis = new MoviesApi();
-    Promise.all([apiMain.getProfileData(), GetMoveis.getData()])
-      .then(([user, movies]) => {
-        setCurrentUser(user);
+
+    localStorage.setItem("checkboxStatus", false);
+
+    GetMoveis.getData()
+      .then(movies => {
         setMovies(movies);
+        setIsDataChange(true);
       })
       .catch((err) => console.log(`Ошибка: ${err.status}`))
       .finally(() => {
@@ -68,12 +77,24 @@ function App() {
   }, [loggedIn]);
 
   React.useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+
     setIsLoading(true);
+
     apiMain
       .getSavedMovies()
-      .then((savedMovieList) => {
+      .then((likedMovies) => {
+        const savedMovieList = likedMovies.filter((item) => {
+          return item.owner === currentUser._id;
+        });
+
         setSavedMovies(savedMovieList);
+
         localStorage.setItem("savedMovieList", JSON.stringify(savedMovieList));
+
+        setIsDataChange(true);
       })
       .catch((err) => {
         console.log(err.message);
@@ -81,7 +102,7 @@ function App() {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [location.pathname, loggedIn]);
+  }, [currentUser]);
 
   function handleLogoClick() {
     history.push("/");
@@ -92,7 +113,7 @@ function App() {
   function signOut() {
     setLoggedIn(false);
     localStorage.clear();
-    setCurrentUser({});
+    setCurrentUser();
     history.push("/");
   }
 
@@ -145,7 +166,7 @@ function App() {
   }
   function searchMovie(keyword) {
     const movieList = movies.filter((item) => {
-      return item.nameRU.includes(keyword);
+      return item.nameRU.toLowerCase().includes(keyword);
     });
     localStorage.setItem("keyword", keyword);
     localStorage.setItem("movieList", JSON.stringify(movieList));
@@ -153,7 +174,7 @@ function App() {
   }
   function searchSavedMovie(keyword) {
     const savedMovieList = savedMovies.filter((item) => {
-      return item.nameRU.includes(keyword);
+      return item.nameRU.toLowerCase().includes(keyword);
     });
     localStorage.setItem("keySavedMovie", keyword);
     localStorage.setItem("savedMovieList", JSON.stringify(savedMovieList));
@@ -188,11 +209,16 @@ function App() {
         nameEN,
       })
       .then((data) => {
-        const savedMovieList = JSON.parse(
+        const newSavedMovieList = JSON.parse(
           localStorage.getItem("savedMovieList")
         );
-        savedMovieList.push(data);
-        localStorage.setItem("savedMovieList", JSON.stringify(savedMovieList));
+
+        newSavedMovieList.push(data);
+
+        setSavedMovies(newSavedMovieList);
+
+        localStorage.setItem("savedMovieList", JSON.stringify(newSavedMovieList));
+
         setIsDataChange(true);
       })
       .catch((err) => {
@@ -207,6 +233,7 @@ function App() {
           else return (id = "");
         })
       : (id = movie._id);
+
     apiMain
       .deleteMovie(id)
       .then(() => {
@@ -217,6 +244,7 @@ function App() {
           "savedMovieList",
           JSON.stringify(newSavedMovieList)
         );
+        setSavedMovies(newSavedMovieList);
         setIsDataChange(true);
       })
       .catch((err) => {
@@ -225,14 +253,18 @@ function App() {
   }
   function shortMoviesFilter(list, nameList) {
     setCheckboxStatus(!checkboxStatus);
+
     const filteredList = list.filter((item) => {
       return item.duration <= 40
     })
-    localStorage.setItem("checkboxStatus", checkboxStatus);
+
+    localStorage.setItem("checkboxStatus", !checkboxStatus);
+
     if(nameList === "movieList"){
-    localStorage.setItem("filteredMovieList", JSON.stringify(filteredList))}
-    else { localStorage.setItem("filteredSavedMovieList", JSON.stringify(filteredList))}
-    setIsDataChange(true);
+      localStorage.setItem("filteredMovieList", JSON.stringify(filteredList))}
+    else { 
+      localStorage.setItem("filteredSavedMovieList", JSON.stringify(filteredList))
+    }
   }
 
   return !firstLoading ? (

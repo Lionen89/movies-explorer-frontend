@@ -1,14 +1,11 @@
 import React from "react";
 import "./MoreButton.css";
-import Preloader from "../Preloader/Preloader";
 
-function MoreButton() {
-  function handleClick() {
-    return <Preloader />;
-  }
+function MoreButton(props) {
+
   return (
     <div className="more-button__container">
-      <button className="more-button" onClick={handleClick}>
+      <button className="more-button" onClick={props.loadMore}>
         Ещё
       </button>
     </div>
