@@ -17,6 +17,7 @@ function Movies(props) {
 function MoviesBody(props) {
   const [index, setIndex] = React.useState(12);
   const checkboxStatus = JSON.parse(localStorage.getItem("checkboxStatus"));
+  const windowDimensions = useWindowDimensions();
 
   const movieList = (!checkboxStatus
     ? JSON.parse(localStorage.getItem("movieList"))
@@ -47,8 +48,6 @@ function MoviesBody(props) {
   React.useEffect(() => {
     props.setIsDataChange(false);
   }, [props.isDataChange]);
-
-  console.log('useWindowDimensions', useWindowDimensions());
 
   return (
     <>
