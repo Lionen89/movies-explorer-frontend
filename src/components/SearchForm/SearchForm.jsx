@@ -7,13 +7,13 @@ function SearchForm(props) {
   useEffect(() => {
     props.setIsDataChange(false);
   }, [props.isDataChange]);
-  const checkboxStatus = JSON.parse(localStorage.getItem("checkboxStatus"));
-  const [keyword, setKeyword] = React.useState('');
+
   const location = useLocation();
+  const [keyword, setKeyword] = React.useState('');
   const defaultValue =
-    location.pathname === "/saved-movies"
-      ? localStorage.getItem("keySavedMovie")
-      : localStorage.getItem("keyword");
+      location.pathname === "/saved-movies" ?
+          localStorage.getItem("keySavedMovie") :
+          localStorage.getItem("keyword");
 
   function handleInputChange(e) {
     setKeyword(e.target.value);
@@ -22,6 +22,7 @@ function SearchForm(props) {
     e.preventDefault();
     props.onSearch(keyword);
   };
+
   return (
     <>
       <section className="search-form">
@@ -39,9 +40,9 @@ function SearchForm(props) {
             <button className="search-form__arrow"></button>
           </label>
         </form>
-        <FilterCheckbox 
-          checkboxStatus = {checkboxStatus}
-          shortMoviesFilter={props.shortMoviesFilter} 
+        <FilterCheckbox
+          status={props.checkboxStatus}
+          onChange={props.onCheckboxChange}
         />
       </section>
     </>

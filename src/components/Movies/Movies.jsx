@@ -14,39 +14,62 @@ function Movies(props) {
   }
 }
 
-function MoviesBody(props) {
-  const [index, setIndex] = React.useState(12);
-  const checkboxStatus = JSON.parse(localStorage.getItem("checkboxStatus"));
-  const windowDimensions = useWindowDimensions();
+function setInitialLimit(width) {
+    if (width > 960) {
+        return 12;
+    } else if (width > 490) {
+        return 8;
+    }
 
-  const movieList = (!checkboxStatus
+    return 5;
+}
+
+function countMoreNumber(width) {
+    return width > 960 ? 3 : 2;
+}
+
+function MoviesBody(props) {
+  const [checkboxStatus, setCheckboxStatus] = React.useState(JSON.parse(localStorage.getItem("checkboxStatus")));
+  const windowWidth = useWindowDimensions().width;
+  const initialLimit = setInitialLimit(windowWidth);
+  const [index, setIndex] = React.useState(initialLimit);
+  const [loadMoreNumber, setLoadMoreNumber] = React.useState(countMoreNumber(windowWidth));
+
+  React.useEffect(() => {
+      setLoadMoreNumber(countMoreNumber(windowWidth))
+  }, [windowWidth]);
+
+  const moviesList = (!checkboxStatus
     ? JSON.parse(localStorage.getItem("movieList"))
     : JSON.parse(localStorage.getItem("filteredMovieList"))) || [];
-  
-  const savedMovieList = (!checkboxStatus ? JSON.parse(localStorage.getItem("savedMovieList")) :
-  JSON.parse(localStorage.getItem("filteredSavedMovieList"))) || [];
 
-  const preparedMoviesList = movieList.map(item => {
-    return {
-      ...item,
-      isLiked: savedMovieList.some((i) => i.nameRU === item.nameRU)
-    };
-  })
-
-  const [list, setList] = React.useState(preparedMoviesList.slice(0, 12));
-  const [showMore, setShowMore] = React.useState(preparedMoviesList.length > 12);
+  const [list, setList] = React.useState(moviesList.slice(0, index));
+  const [showMore, setShowMore] = React.useState(moviesList.length > index);
 
   const loadMore = () => {
-    const newIndex = index + 12;
-    const newShowMore = newIndex < preparedMoviesList.length - 1;
-    const newList = list.concat(preparedMoviesList.slice(index, newIndex));
+    const newIndex = index + loadMoreNumber;
+    const newShowMore = newIndex < moviesList.length - 1;
+    const newList = list.concat(moviesList.slice(index, newIndex));
     setIndex(newIndex);
     setList(newList);
     setShowMore(newShowMore);
   };
+
+  const onCheckboxChange = () => {
+      setCheckboxStatus(!checkboxStatus);
+      props.shortMoviesFilter(moviesList, "movieList");
+  }
   
   React.useEffect(() => {
     props.setIsDataChange(false);
+
+    if (moviesList.length !== list.length) {
+        setIndex(initialLimit);
+        setList(moviesList.slice(0, index));
+        setShowMore(moviesList.length > index)
+    } else {
+        setList(list => list.map(item => moviesList.find(i => i.id === item.id)));
+    }
   }, [props.isDataChange]);
 
   return (
@@ -57,9 +80,10 @@ function MoviesBody(props) {
       />
       <SearchForm
         onSearch={props.onSearch}
-        shortMoviesFilter={props.shortMoviesFilter}
         setIsDataChange={props.setIsDataChange}
         isDataChange={props.isDataChange}
+        onCheckboxChange={onCheckboxChange}
+        checkboxStatus={checkboxStatus}
       />
       <MoviesCardList
         isLoading={props.isLoading}

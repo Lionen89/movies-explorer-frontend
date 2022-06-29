@@ -8,13 +8,19 @@ import Preloader from "../Preloader/Preloader";
 import "./SavedMovies.css";
 
 function SavedMovies(props) {
-  const checkboxStatus = JSON.parse(localStorage.getItem("checkboxStatus"));
-  const savedMovieList = !checkboxStatus ? JSON.parse(localStorage.getItem("savedMovieList")) :
-  JSON.parse(localStorage.getItem("filteredSavedMovieList"));
+  const [checkboxStatus, setCheckboxStatus] = React.useState(false);
+  const savedMovieList = checkboxStatus ?
+      JSON.parse(localStorage.getItem("filteredSavedMovieList")) :
+      JSON.parse(localStorage.getItem("savedMovieList"));
 
   React.useEffect(() => {
     props.setIsDataChange(false);
   }, [props.isDataChange]);
+
+  const onCheckboxChange = () => {
+      setCheckboxStatus(!checkboxStatus);
+      props.shortMoviesFilter(savedMovieList, "savedMovieList");
+  }
 
   if (props.isLoading) return <Preloader />;
   else
@@ -26,9 +32,10 @@ function SavedMovies(props) {
         />
         <SearchForm
           onSearch={props.onSearch}
-          shortMoviesFilter={props.shortMoviesFilter}
           setIsDataChange={props.setIsDataChange}
           isDataChange={props.isDataChange}
+          onCheckboxChange={onCheckboxChange}
+          checkboxStatus={checkboxStatus}
         />
         <MoviesCardList
           isLoading={props.isLoading}
