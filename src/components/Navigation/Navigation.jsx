@@ -1,16 +1,19 @@
 import React from "react";
 import "./Navigation.css";
 import { Link, useLocation } from "react-router-dom";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Navigation(props) {
   const [isNavigationOpen, togleIsNavigation] = React.useState(false);
+  const currentUser = React.useContext(CurrentUserContext);
 
   function handleMenuClick() {
     togleIsNavigation(!isNavigationOpen);
   }
 
   const location = useLocation();
-  if (location.pathname === "/") {
+
+  if (location.pathname === "/" && !currentUser) {
     return (
       <div className="nav-auth">
         <Link to="/signup" className="nav-auth__link">
@@ -41,7 +44,7 @@ function Navigation(props) {
               location.pathname === "/movies"
                 ? "navigation__link-film_active"
                 : ""
-            }`}
+            } ${location.pathname === "/" && !isNavigationOpen ? "navigation__link-main" : ""}`}
           >
             Фильмы
           </Link>
@@ -51,16 +54,20 @@ function Navigation(props) {
               location.pathname === "/saved-movies"
                 ? "navigation__link-film_active"
                 : ""
-            }`}
+            } ${location.pathname === "/" && !isNavigationOpen ? "navigation__link-main" : ""}`}
           >
             Сохранённые фильмы
           </Link>
           <button
             onClick={props.onProfileClick}
-            className="navigation__link_profile"
+            className={`navigation__link-profile ${
+              location.pathname === "/" && !isNavigationOpen ? "navigation__link-profile_main" : ""
+            }`}
           >
             Аккаунт
-            <div className="navigation__link_profile_profile-img"></div>
+            <div className={`navigation__link-profile-profile-img ${
+              location.pathname === "/" && !isNavigationOpen ? "navigation__link-profile-img_main" : ""
+            }`}></div>
           </button>
         </div>
         <div className="navigation__burger-menu" onClick={handleMenuClick}>

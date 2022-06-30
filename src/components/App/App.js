@@ -12,7 +12,7 @@ import apiMain from "../../utils/MainApi";
 import MoviesApi from "../../utils/MoviesApi";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
-import { urlserver } from "../../utils/Constants";
+import { urlserver, SHORT_FILM } from "../../utils/Constants";
 
 import "./App.css";
 import Preloader from "../Preloader/Preloader";
@@ -29,7 +29,6 @@ function App() {
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
   const [movies, setMovies] = React.useState([]);
   const [savedMovies, setSavedMovies] = React.useState([]);
-  const [checkboxStatus, setCheckboxStatus] = React.useState(false);
 
   React.useEffect(() => {
     const tokenCheck = () => {
@@ -43,7 +42,9 @@ function App() {
           .then((user) => {
             setCurrentUser(user);
             setLoggedIn(true);
-            path === "/signin" ? history.push("/movies") : history.push(path);
+            ["/signin", "/signup"].includes(path)
+              ? history.push("/movies")
+              : history.push(path);
           })
           .catch((err) => console.log(`Ошибка: ${err}`))
           .finally(() => {
@@ -66,28 +67,32 @@ function App() {
     const GetMoveis = new MoviesApi();
 
     Promise.all([GetMoveis.getData(), apiMain.getSavedMovies()])
-        .then(([movies, likedMovies]) => {
-          const savedMovieList = likedMovies.filter((item) => {
-            return item.owner === currentUser._id;
-          });
+      .then(([movies, likedMovies]) => {
+        const savedMovieList = likedMovies.filter((item) => {
+          return item.owner === currentUser._id;
+        });
 
-          setSavedMovies(savedMovieList);
+        setSavedMovies(savedMovieList);
 
-          localStorage.setItem("savedMovieList", JSON.stringify(savedMovieList));
+        localStorage.setItem("savedMovieList", JSON.stringify(savedMovieList));
 
-          setMovies(movies.map(item => {
+        setMovies(
+          movies.map((item) => {
             return {
               ...item,
-              isLiked: Boolean(savedMovieList.find(i => i.nameRU === item.nameRU)),
-            }
-          }));
+              isLiked: Boolean(
+                savedMovieList.find((i) => i.nameRU === item.nameRU)
+              ),
+            };
+          })
+        );
 
-          setIsDataChange(true);
-        })
-        .catch((err) => console.log(`Ошибка: ${err.status}`))
-        .finally(() => {
-          setIsLoading(false);
-        });
+        setIsDataChange(true);
+      })
+      .catch((err) => console.log(`Ошибка: ${err.status}`))
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [currentUser]);
 
   function handleLogoClick() {
@@ -155,7 +160,7 @@ function App() {
       return item.nameRU.toLowerCase().includes(keyword);
     });
     const shortMoviesList = movieList.filter((item) => {
-      return item.duration <= 40;
+      return item.duration <= SHORT_FILM;
     });
 
     localStorage.setItem("keyword", keyword);
@@ -175,12 +180,15 @@ function App() {
     setIsDataChange(true);
   }
   function toggleMovielike(id, isLike) {
-    const newMovieList = JSON.parse(
-        localStorage.getItem("movieList")
-    ).map(item => item.id === id ? {
-      ...item,
-      isLiked: isLike ? true : false
-    } : item);
+    const newMovieList = JSON.parse(localStorage.getItem("movieList")).map(
+      (item) =>
+        item.id === id
+          ? {
+              ...item,
+              isLiked: isLike ? true : false,
+            }
+          : item
+    );
 
     setMovies(newMovieList);
 
@@ -189,17 +197,24 @@ function App() {
   function toggleFilteredMovielike(id, isLike) {
     const isSavedMoviesPage = location.pathname === "/saved-movies";
     const newMovieList = JSON.parse(
-        isSavedMoviesPage ?
-            localStorage.getItem("filteredSavedMovieList") :
-            localStorage.getItem("filteredMovieList")
-    ).map(item => item.id === id ? {
-      ...item,
-      isLiked: isLike ? true : false
-    } : item);
+      isSavedMoviesPage
+        ? localStorage.getItem("filteredSavedMovieList")
+        : localStorage.getItem("filteredMovieList")
+    ).map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            isLiked: isLike ? true : false,
+          }
+        : item
+    );
 
-    isSavedMoviesPage ?
-        localStorage.setItem("filteredSavedMovieList", JSON.stringify(newMovieList)) :
-        localStorage.setItem("filteredMovieList", JSON.stringify(newMovieList));
+    isSavedMoviesPage
+      ? localStorage.setItem(
+          "filteredSavedMovieList",
+          JSON.stringify(newMovieList)
+        )
+      : localStorage.setItem("filteredMovieList", JSON.stringify(newMovieList));
   }
   function setMovieLike(movie) {
     let country;
@@ -235,12 +250,17 @@ function App() {
         );
         const isFiltered = JSON.parse(localStorage.getItem("checkboxStatus"));
 
-        isFiltered ? toggleFilteredMovielike(data.movieId, true) : toggleMovielike(data.movieId, true);
+        isFiltered
+          ? toggleFilteredMovielike(data.movieId, true)
+          : toggleMovielike(data.movieId, true);
 
         newSavedMovieList.push(data);
         setSavedMovies(newSavedMovieList);
 
-        localStorage.setItem("savedMovieList", JSON.stringify(newSavedMovieList));
+        localStorage.setItem(
+          "savedMovieList",
+          JSON.stringify(newSavedMovieList)
+        );
 
         setIsDataChange(true);
       })
@@ -272,7 +292,9 @@ function App() {
 
         setSavedMovies(newSavedMovieList);
 
-        isFiltered ? toggleFilteredMovielike(data.movieId, false) : toggleMovielike(data.movieId, false);
+        isFiltered
+          ? toggleFilteredMovielike(data.movieId, false)
+          : toggleMovielike(data.movieId, false);
 
         setIsDataChange(true);
       })
@@ -280,19 +302,19 @@ function App() {
         console.log(err.message);
       });
   }
-  function shortMoviesFilter(list, nameList) {
-    setCheckboxStatus(!checkboxStatus);
-
+  function shortMoviesFilter(list, nameList, checkboxStatus) {
     const filteredList = list.filter((item) => {
-      return item.duration <= 40
-    })
-
-    localStorage.setItem("checkboxStatus", !checkboxStatus);
+      return item.duration <= SHORT_FILM;
+    });
 
     if (nameList === "movieList") {
-      localStorage.setItem("filteredMovieList", JSON.stringify(filteredList))}
-    else { 
-      localStorage.setItem("filteredSavedMovieList", JSON.stringify(filteredList))
+      localStorage.setItem("filteredMovieList", JSON.stringify(filteredList));
+      localStorage.setItem("checkboxStatus", checkboxStatus);
+    } else {
+      localStorage.setItem(
+        "filteredSavedMovieList",
+        JSON.stringify(filteredList)
+      );
     }
 
     setIsDataChange(true);
@@ -315,7 +337,7 @@ function App() {
               <Login onLogoClick={handleLogoClick} hadleLogin={hadleLogin} />
             </Route>
             <Route exact path="/">
-              <Main />
+              <Main onProfileClick={handleProfileClick} />
             </Route>
             <ProtectedRoute
               path="/profile"

@@ -5,23 +5,40 @@ import { urlserver } from "../../utils/Constants";
 function MoviesCard(props) {
   const location = useLocation();
   let image;
+
   props.movie.image.url
     ? (image = urlserver + props.movie.image.url)
     : (image = props.movie.image);
+
   function handleLikeClick() {
-    if ((location.pathname === "/movies" && props.isLiked) || location.pathname === "/saved-movies") {
+    if (
+      (location.pathname === "/movies" && props.isLiked) ||
+      location.pathname === "/saved-movies"
+    ) {
       props.deleteMovie(props.movie);
     } else props.onCardLike(props.movie);
   }
+
   function getTimeFromMins(mins) {
     let hours = Math.trunc(mins / 60);
     let minutes = mins % 60;
-    if(hours ===0) {return minutes + "м"}
-    else {return hours + "ч " + minutes + "м"};
+    if (hours === 0) {
+      return minutes + "м";
+    } else {
+      return hours + "ч " + minutes + "м";
+    }
   }
+
   return (
     <article className="mov-card">
-      <img src={image} alt="Постер фильма" className="mov-card__img" />
+      <a
+        href={props.movie.trailerLink}
+        rel="noreferrer"
+        className="mov-card__img-container"
+        target="_blank"
+      >
+        <img src={image} alt="Постер фильма" className="mov-card__img" />
+      </a>
       <h2 className="mov-card__title">{props.movie.nameRU}</h2>
       <button
         className={`mov-card__like ${

@@ -12,6 +12,7 @@ function Footer() {
           <li>
             <a
               target="_blank"
+              rel="noreferrer"
               href="https://practicum.yandex.ru/"
               className="footer__link"
             >
@@ -21,6 +22,7 @@ function Footer() {
           <li>
             <a
               target="_blank"
+              rel="noreferrer"
               href="https://github.com/Lionen89"
               className="footer__link"
             >
@@ -30,6 +32,7 @@ function Footer() {
           <li>
             <a
               target="_blank"
+              rel="noreferrer"
               href="https://www.facebook.com/profile.php?id=100001774543665"
               className="footer__link"
             >

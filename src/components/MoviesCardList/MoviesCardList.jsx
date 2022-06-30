@@ -6,7 +6,7 @@ function MoviesCardList(props) {
   const { list, isSavedMovies } = props;
   const keyword = isSavedMovies ? localStorage.getItem("keySavedMovie") : localStorage.getItem("keyword");
 
-  if (!list) {
+  if (!list.length) {
     return keyword ? <span className="mov-card-list__text">Ничего не найдено</span> : null;
   } 
 

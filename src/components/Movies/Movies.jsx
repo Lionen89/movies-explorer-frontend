@@ -6,6 +6,14 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import MoreButton from "../MoreButton/MoreButton";
 import Preloader from "../Preloader/Preloader";
 import useWindowDimensions from '../../hooks/screenSizeDetector';
+import { LIMIT_BIG_PAGE,
+  LIMIT_MIDDLE_PAGE,
+  LIMIT_SMALL_PAGE,
+  UPPER_BRREACKPOINT,
+  LOWER_BRREACKPOINT,
+  LOAD_MORE_NUMBER_BIG_PAGE,
+  LOAD_MORE_NUMBER_SMALL_PAGE } from "../../utils/Constants";
+
 
 function Movies(props) {
   if (props.isLoading) return <Preloader />;
@@ -15,17 +23,17 @@ function Movies(props) {
 }
 
 function setInitialLimit(width) {
-    if (width > 960) {
-        return 12;
-    } else if (width > 490) {
-        return 8;
+    if (width > UPPER_BRREACKPOINT) {
+        return LIMIT_BIG_PAGE;
+    } else if (width > LOWER_BRREACKPOINT) {
+        return LIMIT_MIDDLE_PAGE;
     }
 
-    return 5;
+    return LIMIT_SMALL_PAGE;
 }
 
 function countMoreNumber(width) {
-    return width > 960 ? 3 : 2;
+    return width > UPPER_BRREACKPOINT ? LOAD_MORE_NUMBER_BIG_PAGE : LOAD_MORE_NUMBER_SMALL_PAGE;
 }
 
 function MoviesBody(props) {
@@ -57,7 +65,8 @@ function MoviesBody(props) {
 
   const onCheckboxChange = () => {
       setCheckboxStatus(!checkboxStatus);
-      props.shortMoviesFilter(moviesList, "movieList");
+
+      props.shortMoviesFilter(moviesList, "movieList", !checkboxStatus);
   }
   
   React.useEffect(() => {
