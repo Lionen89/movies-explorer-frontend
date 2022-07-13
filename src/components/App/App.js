@@ -154,10 +154,11 @@ function App() {
   };
   function closeInfoTooltip() {
     setIsInfoTooltipOpen(false);
+    setTimeout(setError, 1000, '');
   }
   function searchMovie(keyword) {
     const movieList = movies.filter((item) => {
-      return item.nameRU.toLowerCase().includes(keyword);
+      return item.nameRU.toLowerCase().includes(keyword.toLowerCase());
     });
     const shortMoviesList = movieList.filter((item) => {
       return item.duration <= SHORT_FILM;
