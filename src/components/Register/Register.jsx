@@ -2,6 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import "./Register.css";
+import {
+  validationMessage,
+  validationEmailMessage,
+  regex,
+  regexEmail,
+} from "../../utils/Constants";
 
 function Register(props) {
   const [name, setName] = React.useState("");
@@ -13,17 +19,47 @@ function Register(props) {
   const [errorEmail, setErrorEmail] = React.useState("");
   const [isValidPassword, setIsValidPassword] = React.useState(true);
   const [errorPassword, setErrorPassword] = React.useState("");
+  const [isFormValid, setValidityForm] = React.useState(false);
+
+  React.useEffect(() => {
+    if (
+      isValidEmail &&
+      email &&
+      password &&
+      isValidPassword &&
+      isValidName &&
+      name
+    ) {
+      setValidityForm(true);
+    } else {
+      setValidityForm(false);
+    }
+  }, [isValidEmail, email, password, isValidPassword, isValidName, name]);
 
   function handleNameChange(e) {
-    setName(e.target.value);
-    if (!setIsValidName(e.target.validity.valid)) {
+    const currentName = e.target.value;
+    setName(currentName);
+    setIsValidName(true);
+    setErrorName("");
+    if (!e.target.validity.valid) {
+      setIsValidName(false);
       setErrorName(e.target.validationMessage);
+    } else if (!regex.test(currentName)) {
+      setIsValidName(false);
+      setErrorName(validationMessage);
     }
   }
   function handleEmailChange(e) {
-    setEmail(e.target.value);
-    if (!setIsValidEmail(e.target.validity.valid)) {
+    const currentEmail = e.target.value;
+    setEmail(currentEmail);
+    setIsValidEmail(true);
+    setErrorEmail("");
+    if (!e.target.validity.valid) {
+      setIsValidEmail(false);
       setErrorEmail(e.target.validationMessage);
+    } else if (!regexEmail.test(currentEmail)) {
+      setIsValidEmail(false);
+      setErrorEmail(validationEmailMessage);
     }
   }
   function handlePasswordChange(e) {
@@ -37,7 +73,6 @@ function Register(props) {
     e.preventDefault();
     props.hadleRegister(name, email, password);
   }
-
   return (
     <div className="auth">
       <img
@@ -114,7 +149,13 @@ function Register(props) {
             {errorPassword}
           </span>
         </label>
-        <button type="submit" className="auth__save-button">
+        <button
+          type="submit"
+          className={`auth__save-button ${
+            !isFormValid ? "auth__save-button_disable" : ""
+          }`}
+          disabled={!isFormValid}
+        >
           Зарегистрироваться
         </button>
         <div className="auth__tooltips">
@@ -124,6 +165,7 @@ function Register(props) {
           </Link>
         </div>
       </form>
+      <span className="auth__error">{props.registerError}</span>
     </div>
   );
 }

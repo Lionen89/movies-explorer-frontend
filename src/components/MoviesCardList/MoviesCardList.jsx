@@ -1,34 +1,30 @@
+import React from "react";
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
-import { useLocation } from "react-router-dom";
 
-function MoviesCardList() {
-  const location = useLocation();
-  if (location.pathname === "/saved-movies")
-    return (
-      <section className="mov-card-list">
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-      </section>
-    );
-  else {
-    return (
-      <section className="mov-card-list">
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-      </section>
-    );
-  }
+function MoviesCardList(props) {
+  const { list, isSavedMovies } = props;
+  const keyword = isSavedMovies ? localStorage.getItem("keySavedMovie") : localStorage.getItem("keyword");
+
+  if (!list.length) {
+    return keyword ? <span className="mov-card-list__text">Ничего не найдено</span> : null;
+  } 
+
+  return (
+    <section className="mov-card-list">
+      {list.map((item) => {
+        return (
+          <MoviesCard
+            movie={item}
+            key={item.id || item._id}
+            onCardLike={props.onCardLike}
+            isLiked={item.isLiked}
+            deleteMovie={props.deleteMovie}
+          />
+        );
+      })}
+    </section>
+  );
 }
+
 export default MoviesCardList;

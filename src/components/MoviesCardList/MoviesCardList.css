@@ -6,6 +6,14 @@
     row-gap: 37px;
     margin: 70px 70px 10px;
 }
+.mov-card-list__text {
+    display: block;
+    margin: 0 auto 40px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.15;
+    max-width: 132px;
+}
 
 @media screen and (max-width: 960px) {
     .mov-card-list {
@@ -16,7 +24,7 @@
     }
 }
 
-@media screen and (max-width: 430px) {
+@media screen and (max-width: 490px) {
     .mov-card-list {
         grid-template-columns: 1fr;
         grid-template-rows: repeat(auto-fill, 1fr);
