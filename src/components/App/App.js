@@ -13,7 +13,6 @@ import MoviesApi from "../../utils/MoviesApi";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import { urlserver, SHORT_FILM } from "../../utils/Constants";
-
 import "./App.css";
 import Preloader from "../Preloader/Preloader";
 
