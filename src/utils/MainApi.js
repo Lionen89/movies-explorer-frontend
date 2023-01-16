@@ -96,7 +96,7 @@ class MainApi {
   };
 }
 
-const apiMain = new MainApi("https://api.movies-explorer.true.nomoredomains.sbs", {
+const apiMain = new MainApi("https://movies-explorer-back.herokuapp.com/", {
   "Content-Type": "application/json",
 });
 export default apiMain;
